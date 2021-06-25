@@ -1,9 +1,9 @@
 class TestUser {
   TestUser({
-    this.name,
+    required this.name,
     this.age,
   });
 
   final String name;
-  final int age;
+  final int? age;
 }

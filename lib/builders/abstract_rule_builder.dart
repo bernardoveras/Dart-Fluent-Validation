@@ -3,7 +3,7 @@ import 'package:fluent_validation/fluent_validation.dart';
 /// Holds a list of rules to match against
 class AbstractRuleBuilder<E> {
   AbstractRuleBuilder({
-    this.expression,
+    required this.expression,
   });
 
   /// The expression to get the result for the rule check
