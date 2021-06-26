@@ -8,9 +8,12 @@ void main() {
   test('lessThan validator returns errors correctly', () => TestLessThanValidator().runTest());
   test('isNotNull validator returns errors correctly', () => TestNotNullValidator().runTest());
   test('isNull validator returns errors correctly', () => TestUserNullValidator().runTest());
-  test('isValidEmailAddress validator returns errors correctly', () => TestUserEmailValidator().runTest());
-  test('isValidPhoneNumber validator returns errors correctly', () => TestUserPhoneValidator().runTest());
-  test('isValidUKPostCode validator returns errors correctly', () => TestUserCepValidator().runTest());
+  test('isValidEmail validator returns errors correctly', () => TestUserEmailValidator().runTest());
+  test('isValidPhone validator returns errors correctly', () => TestUserPhoneValidator().runTest());
+  test('isValidCep validator returns errors correctly', () => TestUserCepValidator().runTest());
+  test('isValidCpf validator returns errors correctly', () => TestUserCpfValidator().runTest());
+  test('isValidCnpj validator returns errors correctly', () => TestUserCnpjValidator().runTest());
+  test('isValidCpfCnpj validator returns errors correctly', () => TestUserCpfCnpjValidator().runTest());
 }
 
 class TestLessThanValidator extends AbstractValidator<TestUser> {
@@ -66,7 +69,7 @@ class TestUserNullValidator extends AbstractValidator<TestUser> {
 
 class TestUserEmailValidator extends AbstractValidator<TestUser> {
   TestUserEmailValidator() {
-    ruleFor((TestUser user) => user.email).isValidEmailAddress().withMessage('Invalid e-mail');
+    ruleFor((TestUser user) => user.email).isValidEmail().withMessage('Invalid e-mail');
   }
 
   void runTest() {
@@ -84,11 +87,11 @@ class TestUserEmailValidator extends AbstractValidator<TestUser> {
 
 class TestUserPhoneValidator extends AbstractValidator<TestUser> {
   TestUserPhoneValidator() {
-    ruleFor((TestUser user) => user.cellphone).isValidPhoneNumber().withMessage('Invalid phone');
+    ruleFor((TestUser user) => user.cellphone).isValidPhone().withMessage('Invalid phone');
   }
 
   void runTest() {
-    final TestUser testUser = TestUser( cellphone: '(21) 98359-7649');
+    final TestUser testUser = TestUser(cellphone: '(21) 98359-7649');
     final TestUser testUserTwo = TestUser(cellphone: '123');
 
     final ValidationResult validationResult = validate(testUser);
@@ -102,12 +105,12 @@ class TestUserPhoneValidator extends AbstractValidator<TestUser> {
 
 class TestUserCepValidator extends AbstractValidator<TestUser> {
   TestUserCepValidator() {
-    ruleFor((TestUser user) => user.cep).isValidUKPostCode().withMessage('Invalid Cep');
+    ruleFor((TestUser user) => user.cep).isValidCep().withMessage('Invalid Cep');
   }
 
   void runTest() {
-    final TestUser testUser = TestUser( cep: '23082-030');
-    final TestUser testUserTwo = TestUser( cep: '12313');
+    final TestUser testUser = TestUser(cep: '23082-030');
+    final TestUser testUserTwo = TestUser(cep: '12313');
 
     final ValidationResult validationResult = validate(testUser);
     final ValidationResult validationResultTwo = validate(testUserTwo);
@@ -115,5 +118,71 @@ class TestUserCepValidator extends AbstractValidator<TestUser> {
     expect(validationResult.hasError, isFalse);
     expect(validationResultTwo.hasError, isTrue);
     expect(validationResultTwo.messages[0], 'Invalid Cep');
+  }
+}
+
+class TestUserCpfValidator extends AbstractValidator<TestUser> {
+  TestUserCpfValidator() {
+    ruleFor((TestUser user) => user.cpf).isValidCpf();
+  }
+
+  void runTest() {
+    final TestUser testUser = TestUser(cpf: '090.343.577-24');
+    final TestUser testUserTwo = TestUser(cep: '09023');
+    final TestUser testUserThree = TestUser(cpf: '09034357724');
+
+    final ValidationResult validationResult = validate(testUser);
+    final ValidationResult validationResultTwo = validate(testUserTwo);
+    final ValidationResult validationResultThree = validate(testUserThree);
+
+    expect(validationResult.hasError, isFalse);
+    expect(validationResultTwo.hasError, isTrue);
+    expect(validationResultThree.hasError, isFalse);
+  }
+}
+
+class TestUserCnpjValidator extends AbstractValidator<TestUser> {
+  TestUserCnpjValidator() {
+    ruleFor((TestUser user) => user.cnpj).isValidCnpj();
+  }
+
+  void runTest() {
+    final TestUser testUser = TestUser(cnpj: '84.020.911/0001-70');
+    final TestUser testUserTwo = TestUser(cnpj: '09023');
+    final TestUser testUserThree = TestUser(cnpj: '85114254000193');
+
+    final ValidationResult validationResultValid = validate(testUser);
+    final ValidationResult validationResultFailedTwo = validate(testUserTwo);
+    final ValidationResult validationResultValidThree = validate(testUserThree);
+
+    expect(validationResultValid.hasError, isFalse);
+    expect(validationResultFailedTwo.hasError, isTrue);
+    expect(validationResultValidThree.hasError, isFalse);
+  }
+}
+
+class TestUserCpfCnpjValidator extends AbstractValidator<TestUser> {
+  TestUserCpfCnpjValidator() {
+    ruleFor((TestUser user) => user.cpfCnpj).isValidCpfCnpj();
+  }
+
+  void runTest() {
+    final TestUser testUser = TestUser(cpfCnpj: '090.343.577-24');
+    final TestUser testUserThree = TestUser(cpfCnpj: '07.482.983/0001-99');
+
+    final TestUser testUserFail = TestUser(cpfCnpj: '090');
+    final TestUser testUserFailTwo = TestUser(cpfCnpj: '09034324');
+
+    final ValidationResult validationResult = validate(testUser);
+    final ValidationResult validationResultTwo = validate(testUserThree);
+
+    final ValidationResult validationResultFail = validate(testUserFail);
+    final ValidationResult validationResultFailTwo = validate(testUserFailTwo);
+
+    expect(validationResult.hasError, isFalse);
+    expect(validationResultTwo.hasError, isFalse);
+
+    expect(validationResultFail.hasError, isTrue);
+    expect(validationResultFailTwo.hasError, isTrue);
   }
 }

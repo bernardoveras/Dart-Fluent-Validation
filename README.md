@@ -38,10 +38,10 @@ ValidationResult result = validator.validate(user);
 
 ## Extra Built In Validators
 These are not included in the default C# version.  
-* isValidEmailAddress - (checks the object is a String and is a valid email address)
-* isValidPhoneNumber - (checks the object is a String and is a valid phone number)
+* isValidEmail - (checks the object is a String and is a valid email address)
+* isValidPhone - (checks the object is a String and is a valid phone number)
 * isValidNationalInsuranceNumber - (checks the object is a String and is a valid UK national insurance number)
-* isValidUKPostCode - (checks the object is a String and is a valid UK post code)
+* isValidCep - (checks the object is a String and is a valid UK post code)
 
 ## Contributing
 Feel free to do a pull request with any ideas and I will check each one.

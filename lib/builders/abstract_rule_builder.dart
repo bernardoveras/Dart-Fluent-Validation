@@ -85,23 +85,33 @@ class AbstractRuleBuilder<E> {
   }
 
   /// Checks the object is a String and is a valid email address
-  AbstractRuleBuilder isValidEmailAddress() {
+  AbstractRuleBuilder isValidEmail() {
     return must((dynamic dyn) => dyn is String && CommonRegex.emailValidator.hasMatch(dyn), "String must be a valid email address");
   }
 
   /// Checks the object is a String and is a valid phone number
-  AbstractRuleBuilder isValidPhoneNumber() {
+  AbstractRuleBuilder isValidPhone() {
     return must((dynamic dyn) => dyn is String && CommonRegex.numberValidator.hasMatch(dyn), "String must be a valid phone number");
   }
 
-  /// Checks the object is a String and is a valid UK national insurance number
-  AbstractRuleBuilder isValidNationalInsuranceNumber() {
-    return must((dynamic dyn) => dyn is String && CommonRegex.ninValidator.hasMatch(dyn), "String must be a valid national insurance number");
+  /// Checks the object is a String and is a valid Cep
+  AbstractRuleBuilder isValidCep() {
+    return must((dynamic dyn) => dyn is String && CommonRegex.cepValidator.hasMatch(dyn), "String must be a valid CEP");
   }
 
-  /// Checks the object is a String and is a valid UK post code
-  AbstractRuleBuilder isValidUKPostCode() {
-    return must((dynamic dyn) => dyn is String && CommonRegex.postCodeValidator.hasMatch(dyn), "String must be a valid UK post code");
+  /// Checks the object is a String and is a valid CPF
+  AbstractRuleBuilder isValidCpf() {
+    return must((dynamic dyn) => dyn is String && CommonRegex.cpfValidator.hasMatch(dyn), "String must be a valid CPF");
+  }
+
+  /// Checks the object is a String and is a valid CNPJ
+  AbstractRuleBuilder isValidCnpj() {
+    return must((dynamic dyn) => dyn is String && CommonRegex.cnpjValidator.hasMatch(dyn), "String must be a valid CNPJ");
+  }
+
+  /// Checks the object is a String and is a valid CPF or CNPJ
+  AbstractRuleBuilder isValidCpfCnpj() {
+    return must((dynamic dyn) => dyn is String && CommonRegex.cpfCnpjValidator.hasMatch(dyn), "String must be a valid CPF or CNPJ");
   }
 
   /// Creates a new rule, passing in an expression and a message and returning a boolean

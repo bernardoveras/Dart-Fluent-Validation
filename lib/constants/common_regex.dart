@@ -1,17 +1,22 @@
 class CommonRegex {
   /// Matches email addresses
-  static final RegExp emailValidator = RegExp(
-      r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+  static final RegExp emailValidator = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
 
   /// Matches phone numbers addresses - (00) 00000-0000
-  static final RegExp numberValidator =
-      RegExp(r"^\([1-9]{2}\) (?:[2-8]|9[1-9])[0-9]{3}\-[0-9]{4}$");
+  static final RegExp numberValidator = RegExp(r"^\([1-9]{2}\) (?:[2-8]|9[1-9])[0-9]{3}\-[0-9]{4}$");
 
   /// Matches national insurance numbers in the UK
-  static final RegExp ninValidator =
-      RegExp(r"^\s*[a-zA-Z]{2}(?:\s*\d\s*){6}[a-zA-Z]?\s*$");
+  static final RegExp ninValidator = RegExp(r"^\s*[a-zA-Z]{2}(?:\s*\d\s*){6}[a-zA-Z]?\s*$");
 
-  /// Matches UK post codes
-  static final RegExp postCodeValidator = RegExp(
-      r"[0-9]{5}-[0-9]{3}");
+  /// Matches CEP
+  static final RegExp cepValidator = RegExp(r"[0-9]{5}-[0-9]{3}");
+
+  /// Matches CPF
+  static final RegExp cpfValidator = RegExp(r'[0-9]{3}\.?[0-9]{3}\.?[0-9]{3}\-?[0-9]{2}');
+
+  /// Matches CNPJ
+  static final RegExp cnpjValidator = RegExp(r'[0-9]{2}\.?[0-9]{3}\.?[0-9]{3}\/?[0-9]{4}\-?[0-9]{2}');
+
+  /// Matches CPF and CNPJ
+  static final RegExp cpfCnpjValidator = RegExp(r'(^\d{3}\.\d{3}\.\d{3}\-\d{2}$)|(^\d{2}\.\d{3}\.\d{3}\/\d{4}\-\d{2}$)');
 }
