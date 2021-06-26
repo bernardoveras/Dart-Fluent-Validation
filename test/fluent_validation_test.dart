@@ -18,8 +18,8 @@ class TestLessThanValidator extends AbstractValidator<TestUser> {
   }
 
   void runTest() {
-    final TestUser testUser = TestUser(age: 18, name: 'Ryan', cellphone: '123', email: 'email@email.com');
-    final TestUser testUserTwo = TestUser(age: 24, name: 'Ryan', cellphone: '123', email: 'email@email.com');
+    final TestUser testUser = TestUser(age: 18);
+    final TestUser testUserTwo = TestUser(age: 24);
 
     final ValidationResult validationResult = validate(testUser);
     final ValidationResult validationResultTwo = validate(testUserTwo);
@@ -35,8 +35,8 @@ class TestNotNullValidator extends AbstractValidator<TestUser> {
   }
 
   void runTest() {
-    final TestUser testUser = TestUser(age: null, name: 'Ryan', cellphone: '123', email: 'email@email.com');
-    final TestUser testUserTwo = TestUser(age: 24, name: 'Ryan', cellphone: '123', email: 'email@email.com');
+    final TestUser testUser = TestUser(age: null);
+    final TestUser testUserTwo = TestUser(age: 24);
 
     final ValidationResult validationResult = validate(testUser);
     final ValidationResult validationResultTwo = validate(testUserTwo);
@@ -52,8 +52,8 @@ class TestUserNullValidator extends AbstractValidator<TestUser> {
   }
 
   void runTest() {
-    final TestUser testUser = TestUser(age: null, name: 'Ryan', cellphone: '123', email: 'email@email.com');
-    final TestUser testUserTwo = TestUser(age: 24, name: 'Ryan', cellphone: '123', email: 'email@email.com');
+    final TestUser testUser = TestUser(age: null);
+    final TestUser testUserTwo = TestUser(age: 24);
 
     final ValidationResult validationResult = validate(testUser);
     final ValidationResult validationResultTwo = validate(testUserTwo);
@@ -69,8 +69,8 @@ class TestUserEmailValidator extends AbstractValidator<TestUser> {
   }
 
   void runTest() {
-    final TestUser testUser = TestUser(age: 18, name: 'Ryan', cellphone: '123', email: 'email@email.com');
-    final TestUser testUserTwo = TestUser(age: 24, name: 'Ryan', cellphone: '123', email: 'email@email');
+    final TestUser testUser = TestUser(email: 'email@email.com');
+    final TestUser testUserTwo = TestUser(email: 'email@email');
 
     final ValidationResult validationResult = validate(testUser);
     final ValidationResult validationResultTwo = validate(testUserTwo);
@@ -87,8 +87,26 @@ class TestUserPhoneValidator extends AbstractValidator<TestUser> {
   }
 
   void runTest() {
-    final TestUser testUser = TestUser(age: 18, name: 'Ryan', cellphone: '(21) 98359-7649', email: 'email@email.com');
-    final TestUser testUserTwo = TestUser(age: 24, name: 'Ryan', cellphone: '123', email: 'email@email.com');
+    final TestUser testUser = TestUser( cellphone: '(21) 98359-7649');
+    final TestUser testUserTwo = TestUser(cellphone: '123');
+
+    final ValidationResult validationResult = validate(testUser);
+    final ValidationResult validationResultTwo = validate(testUserTwo);
+
+    expect(validationResult.hasError, isFalse);
+    expect(validationResultTwo.hasError, isTrue);
+    expect(validationResultTwo.messages[0], 'Invalid phone');
+  }
+}
+
+class TestUserCepValidator extends AbstractValidator<TestUser> {
+  TestUserCepValidator() {
+    ruleFor((TestUser user) => user.cellphone).isValidUKPostCode().withMessage('Invalid Cep');
+  }
+
+  void runTest() {
+    final TestUser testUser = TestUser( cellphone: '(21) 98359-7649');
+    final TestUser testUserTwo = TestUser( cellphone: '123',);
 
     final ValidationResult validationResult = validate(testUser);
     final ValidationResult validationResultTwo = validate(testUserTwo);
