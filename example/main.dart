@@ -3,10 +3,14 @@ import 'models/user.dart';
 import 'validators/user_validator.dart';
 
 void main() {
-  final User user = User("Ryan", "Sample Address", 26);
+  final User validUser = User(name: "Bernardo", email: "bernardo@email", age: 15, address: "Rua X");
+
   final UserValidator userValidator = UserValidator();
-  final ValidationResult validationResult = userValidator.validate(user);
+  final ValidationResult validationResult = userValidator.validate(validUser);
+  
   if (validationResult.hasError) {
-    // Handle Error
+    for (var item in validationResult.messages) {
+      print('Error: $item');
+    }
   }
 }

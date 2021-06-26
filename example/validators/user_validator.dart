@@ -3,8 +3,9 @@ import '../models/user.dart';
 
 class UserValidator extends AbstractValidator<User> {
   UserValidator() {
-    ruleFor((user) => user.age).greaterThan(12);
-    ruleFor((user) => user.address).notEmpty();
+    ruleFor((user) => user.age).greaterThanOrEqual(18);
     ruleFor((user) => user.name).notEmpty();
+    ruleFor((user) => user.email).isValidEmailAddress();
+    ruleFor((user) => user.address).notEmpty();
   }
 }

@@ -3,12 +3,14 @@ description: Example of using fluent validation
 version: 0.0.1
 homepage: https://github.com/SKLn-Rad/Dart-Fluent-Validation
 
+publish_to: 'none'
+
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: ">=2.13.0 <3.0.0"
 
 dependencies:
-    fluent_validation:
-        path: ../
+  fluent_validation:
+    path: ../
 
 dev_dependencies:
-  test: ^1.12.0
+  test: ^1.17.9
