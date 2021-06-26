@@ -1,17 +1,17 @@
-/// Returned when validate is called, this holds potential errors with validated objects.
+/// Retornado quando validate é chamado, contém erros em potencial com objetos validados.
 class ValidationResult {
   ValidationResult({
     this.messages = const <String>[],
     this.hasError = false,
   });
 
-  /// Creates a new validation result to represent an error.
+  /// Cria um novo resultado de validação para representar um erro.
   factory ValidationResult.fromError(String message) {
     return ValidationResult(hasError: true, messages: <String>[message]);
   }
 
-  /// Merges a collection of validation results together.
-  /// Using `ignorePassedMessages` will only keep the messages on failed tests.
+  /// Mescla uma coleção de resultados de validação.
+  /// Usar `ignorePassedMessages` apenas manterá as mensagens em testes que falharam.
   factory ValidationResult.merge(
       List<ValidationResult> results, bool ignorePassedMessages) {
     return ValidationResult(
@@ -25,9 +25,9 @@ class ValidationResult {
     );
   }
 
-  /// Messages which represent the error which can occur
+  /// Mensagens que representam o erro que pode ocorrer
   final List<String> messages;
 
-  /// Whether the result of this action was an error
+  /// Se o resultado desta ação foi um erro
   final bool hasError;
 }

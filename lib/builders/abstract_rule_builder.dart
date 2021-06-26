@@ -1,120 +1,121 @@
 import 'package:fluent_validation/fluent_validation.dart';
 
-/// Holds a list of rules to match against
+/// Contém uma lista de regras para comparar
 class AbstractRuleBuilder<E> {
   AbstractRuleBuilder({
     required this.expression,
   });
 
-  /// The expression to get the result for the rule check
+  /// A expressão para obter o resultado da verificação da regra
   final dynamic Function(E e) expression;
 
   String? _message;
 
-  /// The list of rules to check against
+  /// A lista de regras para verificar
   final List<ValidationResult Function(dynamic)> rules = <ValidationResult Function(dynamic)>[];
 
-  /// Change error message
+  /// Change the error message
   void withMessage(String message) {
     _message = message;
   }
 
-  /// Checks if the object is null
+  /// Verifica se o objeto é nulo
   AbstractRuleBuilder isNull() {
-    return must((dynamic dyn) => dyn == null, "Value must be null");
+    return must((dynamic dyn) => dyn == null, "O valor deve ser nulo");
   }
 
-  /// Checks if the object is not null
+  /// Verifica se o objeto não é nulo
   AbstractRuleBuilder notNull() {
-    return must((dynamic dyn) => dyn != null, "Value must not be null");
+    return must((dynamic dyn) => dyn != null, "O valor não deve ser nulo");
   }
 
-  /// Checks if the object a string and is not empty
+  /// Verifica se o objeto é uma string e não está vazio
   AbstractRuleBuilder notEmpty() {
-    return must((dynamic dyn) => dyn is String && dyn.isNotEmpty, "String must not be empty");
+    return must((dynamic dyn) => dyn is String && dyn.isNotEmpty, "A string não deve estar vazia");
   }
 
-  /// Checks if the object a string and is empty
+  /// Verifica se o objeto é uma string e está vazio
   AbstractRuleBuilder empty() {
-    return must((dynamic dyn) => dyn is String && dyn.isEmpty, "String must be empty");
+    return must((dynamic dyn) => dyn is String && dyn.isEmpty, "String deve estar vazia");
   }
 
-  /// Checks if the object is not equal to another one
+  /// Verifica se o objeto não é igual a outro
   AbstractRuleBuilder notEqual(dynamic obj) {
-    return must((dynamic dyn) => dyn != obj, "Value must not be equal");
+    return must((dynamic dyn) => dyn != obj, "O valor não deve ser igual");
   }
 
-  /// Checks if the object is equal to another one
+  /// Verifica se o objeto é igual a outro
   AbstractRuleBuilder equal(dynamic obj) {
-    return must((dynamic dyn) => dyn == obj, "Value must be equal");
+    return must((dynamic dyn) => dyn == obj, "O valor deve ser igual");
   }
 
-  /// Checks if the object is a String and is inbetween two lengthes
+  /// Verifica se o objeto é uma String e está entre dois comprimentos
   AbstractRuleBuilder length(int min, int max) {
-    return must((dynamic dyn) => dyn is String && dyn.length >= min && dyn.length <= max, "String must between $min and $max characters long");
+    return must(
+        (dynamic dyn) => dyn is String && dyn.length >= min && dyn.length <= max, "A string deve ter entre $min e $max caracteres de comprimento");
   }
 
-  /// Checks if the object is a String and is at least a minimum length
+  /// Verifica se o objeto é uma String e tem pelo menos um comprimento mínimo
   AbstractRuleBuilder minLength(int min) {
-    return must((dynamic dyn) => dyn is String && dyn.length >= min, "String must be more than or equal to $min characters long");
+    return must((dynamic dyn) => dyn is String && dyn.length >= min, "A string deve ter mais ou igual a $min caracteres");
   }
 
-  /// Checks if the object is a String and is at below a maximum length
+  /// Verifica se o objeto é uma String e está abaixo de um comprimento máximo
   AbstractRuleBuilder maxLength(int max) {
-    return must((dynamic dyn) => dyn is String && dyn.length <= max, "String must be less than or equal to $max characters long");
+    return must((dynamic dyn) => dyn is String && dyn.length <= max, "A string deve ter menos ou igual a $max caracteres");
   }
 
-  /// Checks if the object is a number and is less than another value
+  /// Verifica se o objeto é um número e menor que outro valor
   AbstractRuleBuilder lessThan(int min) {
-    return must((dynamic dyn) => dyn is num && dyn < min, "Number must be less than $min");
+    return must((dynamic dyn) => dyn is num && dyn < min, "O número deve ser inferior a $min");
   }
 
-  /// Checks if the object is a number and is less than or equal another value
+  /// Verifica se o objeto é um número e é menor ou igual a outro valor
   AbstractRuleBuilder lessThanOrEqual(int min) {
-    return must((dynamic dyn) => dyn is num && dyn <= min, "Number must be less than or equal to $min");
+    return must((dynamic dyn) => dyn is num && dyn <= min, "O número deve ser menor ou igual a $min");
   }
 
-  /// Checks if the object is a number and is greater than another number
+  /// Verifica se o objeto é um número e é maior que outro número
   AbstractRuleBuilder greaterThan(int max) {
-    return must((dynamic dyn) => dyn is num && dyn > max, "Number must be greater than $max");
+    return must((dynamic dyn) => dyn is num && dyn > max, "O número deve ser maior que $max");
   }
 
-  /// Checks if the object is a number and is greater or equal to another number
+  /// Verifica se o objeto é um número e é maior ou igual a outro número
   AbstractRuleBuilder greaterThanOrEqual(int max) {
-    return must((dynamic dyn) => dyn is num && dyn >= max, "Number must be greater than or equal to $max");
+    return must((dynamic dyn) => dyn is num && dyn >= max, "O número deve ser maior ou igual a $max");
   }
 
-  /// Checks the object is a String and is a valid email address
+  /// Verifica se o objeto é uma String e um E-mail válido
   AbstractRuleBuilder isValidEmail() {
-    return must((dynamic dyn) => dyn is String && CommonRegex.emailValidator.hasMatch(dyn), "String must be a valid email address");
+    return must((dynamic dyn) => dyn is String && CommonRegex.emailValidator.hasMatch(dyn), "String deve ser um endereço de e-mail válido");
   }
 
-  /// Checks the object is a String and is a valid phone number
+  /// Verifica se o objeto é uma String e um Telefone válido
   AbstractRuleBuilder isValidPhone() {
-    return must((dynamic dyn) => dyn is String && CommonRegex.numberValidator.hasMatch(dyn), "String must be a valid phone number");
+    return must((dynamic dyn) => dyn is String && CommonRegex.numberValidator.hasMatch(dyn), "String deve ser um número de telefone válido");
   }
 
-  /// Checks the object is a String and is a valid Cep
+  /// Verifica se o objeto é uma String e um CEP válido
   AbstractRuleBuilder isValidCep() {
-    return must((dynamic dyn) => dyn is String && CommonRegex.cepValidator.hasMatch(dyn), "String must be a valid CEP");
+    return must((dynamic dyn) => dyn is String && CommonRegex.cepValidator.hasMatch(dyn), "A string deve ser um CEP válido");
   }
 
-  /// Checks the object is a String and is a valid CPF
+  /// Verifica se o objeto é uma String e um CPF válido
   AbstractRuleBuilder isValidCpf() {
-    return must((dynamic dyn) => dyn is String && CommonRegex.cpfValidator.hasMatch(dyn), "String must be a valid CPF");
+    return must((dynamic dyn) => dyn is String && CommonRegex.cpfValidator.hasMatch(dyn), "String deve ser um CPF válido");
   }
 
-  /// Checks the object is a String and is a valid CNPJ
+  /// Verifica se o objeto é uma String e um CNPJ válido
   AbstractRuleBuilder isValidCnpj() {
-    return must((dynamic dyn) => dyn is String && CommonRegex.cnpjValidator.hasMatch(dyn), "String must be a valid CNPJ");
+    return must((dynamic dyn) => dyn is String && CommonRegex.cnpjValidator.hasMatch(dyn), "String deve ser um CNPJ válido");
   }
 
-  /// Checks the object is a String and is a valid CPF or CNPJ
+  /// Verifica se o objeto é uma String e um CPF ou CNPJ válido
   AbstractRuleBuilder isValidCpfCnpj() {
-    return must((dynamic dyn) => dyn is String && CommonRegex.cpfCnpjValidator.hasMatch(dyn), "String must be a valid CPF or CNPJ");
+    return must((dynamic dyn) => dyn is String && CommonRegex.cpfCnpjValidator.hasMatch(dyn), "A string deve ser um CPF ou CNPJ válido");
   }
 
-  /// Creates a new rule, passing in an expression and a message and returning a boolean
+  /// Cria uma nova regra, passando uma expressão e uma mensagem e retornando um booleano
   AbstractRuleBuilder must(bool Function(dynamic dyn) validator, String message) {
     rules.add((dynamic param) => ValidationResult(hasError: !validator(param), messages: <String>[_message ?? message]));
     return this;
