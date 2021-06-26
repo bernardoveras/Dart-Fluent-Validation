@@ -10,6 +10,7 @@ void main() {
   test('isNull validator returns errors correctly', () => TestUserNullValidator().runTest());
   test('isValidEmailAddress validator returns errors correctly', () => TestUserEmailValidator().runTest());
   test('isValidPhoneNumber validator returns errors correctly', () => TestUserPhoneValidator().runTest());
+  test('isValidUKPostCode validator returns errors correctly', () => TestUserCepValidator().runTest());
 }
 
 class TestLessThanValidator extends AbstractValidator<TestUser> {
@@ -101,18 +102,18 @@ class TestUserPhoneValidator extends AbstractValidator<TestUser> {
 
 class TestUserCepValidator extends AbstractValidator<TestUser> {
   TestUserCepValidator() {
-    ruleFor((TestUser user) => user.cellphone).isValidUKPostCode().withMessage('Invalid Cep');
+    ruleFor((TestUser user) => user.cep).isValidUKPostCode().withMessage('Invalid Cep');
   }
 
   void runTest() {
-    final TestUser testUser = TestUser( cellphone: '(21) 98359-7649');
-    final TestUser testUserTwo = TestUser( cellphone: '123',);
+    final TestUser testUser = TestUser( cep: '23082-030');
+    final TestUser testUserTwo = TestUser( cep: '12313');
 
     final ValidationResult validationResult = validate(testUser);
     final ValidationResult validationResultTwo = validate(testUserTwo);
 
     expect(validationResult.hasError, isFalse);
     expect(validationResultTwo.hasError, isTrue);
-    expect(validationResultTwo.messages[0], 'Invalid phone');
+    expect(validationResultTwo.messages[0], 'Invalid Cep');
   }
 }
