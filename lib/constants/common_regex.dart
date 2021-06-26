@@ -3,9 +3,9 @@ class CommonRegex {
   static final RegExp emailValidator = RegExp(
       r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
 
-  /// Matches phone numbers addresses
+  /// Matches phone numbers addresses - (00) 00000-0000
   static final RegExp numberValidator =
-      RegExp(r"^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$");
+      RegExp(r"^\([1-9]{2}\) (?:[2-8]|9[1-9])[0-9]{3}\-[0-9]{4}$");
 
   /// Matches national insurance numbers in the UK
   static final RegExp ninValidator =
